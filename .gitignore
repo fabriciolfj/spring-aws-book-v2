@@ -1,0 +1,10 @@
+
+.gradle/
+.idea
+build/
+*.tfstate
+terraform/v1/.terraform
+
+*.backup
+
+*.hcl
