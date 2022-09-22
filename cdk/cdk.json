@@ -15,7 +15,7 @@
   "context": {
     "applicationName": "todo-app",
     "region": "sa-east-1",
-    "accountId": "",
+    "accountId": "849316406353",
     "springProfile": "aws",
     "environmentName": "staging",
     "dockerImageUrl": "docker.io/stratospheric/todo-app-v1:latest"
