@@ -8,3 +8,5 @@ terraform/v1/.terraform
 *.backup
 
 *.hcl
+
+cdk/node_modules

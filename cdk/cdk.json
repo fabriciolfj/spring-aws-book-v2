@@ -1,23 +1,10 @@
 {
-  "app": "./mvnw -e -q compile exec:java",
-  "watch": {
-    "include": [
-      "**"
-    ],
-    "exclude": [
-      "README.md",
-      "cdk*.json",
-      "target",
-      "pom.xml",
-      "src/test"
-    ]
-  },
   "context": {
-    "applicationName": "todo-app",
+    "applicationName": "app-spring",
     "region": "sa-east-1",
     "accountId": "849316406353",
     "springProfile": "aws",
     "environmentName": "staging",
-    "dockerImageUrl": "docker.io/stratospheric/todo-app-v1:latest"
+    "dockerImageUrl": "docker.io/fabricio211/spring-aws:latest"
   }
 }
