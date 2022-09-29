@@ -17,7 +17,7 @@ public class DockerRepositoryApp {
     String region = (String) app.getNode().tryGetContext("region");
     Validations.requireNonEmpty(region, "context variable 'region' must not be null");
 
-    String applicationName = (String) app.getNode().tryGetContext("");
+    String applicationName = (String) app.getNode().tryGetContext("applicationName");
     Validations.requireNonEmpty(applicationName, "context variable 'applicationName' must not be null");
 
     Environment awsEnvironment = makeEnv(accountId, region);
