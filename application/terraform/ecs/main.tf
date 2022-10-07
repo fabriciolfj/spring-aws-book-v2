@@ -1,6 +1,6 @@
 resource "aws_vpc" "vpc" {
   cidr_block         = "10.0.0.0/16"
-  enable_dns_support = true
+  #enable_dns_support = true
 
   lifecycle {
     ignore_changes = [
@@ -9,13 +9,18 @@ resource "aws_vpc" "vpc" {
   }
 }
 
-data "aws_availability_zones" "availability_zones" {}
-
-resource "aws_subnet" "main" {
+resource "aws_subnet" "subnetA" {
   vpc_id     = aws_vpc.vpc.id
   cidr_block = "10.0.1.0/24"
   map_public_ip_on_launch = true
-  availability_zone =  data.aws_availability_zones.availability_zones.names[0]
+  availability_zone =   "sa-east-1a"
+}
+
+resource "aws_subnet" "subnetB" {
+  vpc_id     = aws_vpc.vpc.id
+  cidr_block = "10.0.2.0/24"
+  map_public_ip_on_launch = true
+  availability_zone =   "sa-east-1b"
 }
 
 resource "aws_internet_gateway" "gw" {
@@ -31,21 +36,25 @@ resource "aws_route_table" "route_ec2" {
   }
 }
 
-resource "aws_eip" "gateway" {
-  count      = 2
-  vpc        = true
-  depends_on = [aws_internet_gateway.gw]
+#resource "aws_eip" "gateway" {
+#  count      = 2
+#  vpc        = true
+#  depends_on = [aws_internet_gateway.gw]
+#}
+
+#resource "aws_nat_gateway" "gateway" {
+#  count         = 2
+#  subnet_id     = element(aws_subnet.main.*.id, count.index)
+#  allocation_id = element(aws_eip.gateway.*.id, count.index)
+#}
+
+resource "aws_route_table_association" "public-subnetB" {
+  subnet_id      = aws_subnet.subnetB.id
+  route_table_id = aws_route_table.route_ec2.id
 }
 
-resource "aws_nat_gateway" "gateway" {
-  count         = 2
-  subnet_id     = element(aws_subnet.main.*.id, count.index)
-  allocation_id = element(aws_eip.gateway.*.id, count.index)
-}
-
-
-resource "aws_route_table_association" "public-subnet" {
-  subnet_id      = aws_subnet.main.id
+resource "aws_route_table_association" "public-subnetA" {
+  subnet_id      = aws_subnet.subnetA.id
   route_table_id = aws_route_table.route_ec2.id
 }
 
